@@ -21,7 +21,7 @@ import { {{modelName}}, {{modelName}}FromJSONTyped, {{modelName}}ToJSON, {{model
 /**
  * Check if a given object implements the {{classname}} interface.
  */
-export function instanceOf{{classname}}(value: object): value is {{classname}} {
+export function instanceOf{{classname}}(value: any): value is {{classname}} {
     {{#vars}}
     {{#required}}
     if (!('{{name}}' in value) || value['{{name}}'] === undefined) return false;
