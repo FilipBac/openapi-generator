@@ -254,6 +254,16 @@ public class DefaultGenerator implements Generator {
             config.importMapping().putAll(opts.getGeneratorSettings().getImportMappings());
         }
 
+        // make sure spec definition doesn't use same schema object for multiple different properties
+        // this step is necessary because normalization changes schemas in-place instead of making copies
+        try {
+            OpenAPIDememoizer openapiDememoizer = OpenAPIDememoizer.createDememoizer(openAPI);
+            openapiDememoizer.dememoize();
+        } catch (Exception e) {
+            LOGGER.error("An exception occurred in OpenAPI Dememoizer.");
+            e.printStackTrace();
+        }
+
         // normalize the spec
         try {
             if (config.getUseOpenapiNormalizer()) {
